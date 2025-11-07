@@ -1,8 +1,9 @@
 {
     "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/"
-        }
+      {
+        "source": "/api/:path*",
+        "destination": "https://depi-backend.onrender.com/api/:path*"
+      },
+      {"source": "/(.*)", "destination": "/"}
     ]
-}
+}  
