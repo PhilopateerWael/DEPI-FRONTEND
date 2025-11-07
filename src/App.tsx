@@ -50,7 +50,7 @@ function App() {
             try {
                 const res = await api.get<{ user: TUser }>("/auth/me")
                 dispatch(auth(res.data.user))
-            } catch (e) {
+            } catch{
                 dispatch(notAuth())
                 localStorage.setItem("wishlist", JSON.stringify([]))
                 localStorage.setItem("cart", JSON.stringify([]))
@@ -62,14 +62,14 @@ function App() {
                 const res = await api.get<TProduct[]>("/products/all");
                 console.log(res);
                 dispatch(setProducts(res.data));
-            } catch (err: any) {
+            } catch{
                 setError(true)
             }
         }
 
         tryFetchProducts()
         tryFetchSelf()
-    }, [])
+    }, [dispatch])
 
 
     if (authSlice.loading) {

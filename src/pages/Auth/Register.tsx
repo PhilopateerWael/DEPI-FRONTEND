@@ -6,21 +6,26 @@ import type { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import type { TUser } from "../../Types";
 import { auth } from "../../store/slices/authSlice";
+import type { AxiosError } from "axios";
+
+function isAxiosError(error: unknown): error is AxiosError<{ message?: string }> {
+    return typeof error === "object" && error !== null && "isAxiosError" in error;
+}
 
 const Register = () => {
     const authSlice = useSelector((state: RootState) => state.auth)
-    
+
     const navigate = useNavigate();
-    
+
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-    
+
     if (authSlice.user) return <Navigate to="/" />
-    
+
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
@@ -32,7 +37,7 @@ const Register = () => {
         setLoading(true);
 
         try {
-            const res = await api.post<{user: TUser}>("/auth/register", {
+            const res = await api.post<{ user: TUser }>("/auth/register", {
                 username,
                 email,
                 password,
@@ -42,11 +47,14 @@ const Register = () => {
 
             dispatch(auth(user))
             navigate("/");
-        } catch (err: any) {
-            const msg =
-                err?.response?.data?.message ||
-                err.message ||
-                "Something went wrong";
+        } catch (err: unknown) {
+            let msg = "Something went wrong";
+
+            if (isAxiosError(err)) {
+                msg = err.response?.data?.message ?? msg;
+            } else if (err instanceof Error) {
+                msg = err.message;
+            }
 
             alert(msg);
         } finally {

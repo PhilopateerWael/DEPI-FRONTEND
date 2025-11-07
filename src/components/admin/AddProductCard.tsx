@@ -15,7 +15,7 @@ const AddProductCard = () => {
             });
             setOpen(false);
             location.reload();
-        } catch (error) {
+        } catch {
             alert("Failed to add product");
         }
     };

@@ -39,7 +39,7 @@ export const Cart = () => {
             }).catch(e => {
                 if (e?.response?.data?.ok) {
                     dispatch(setCart(e.response.data.ok))
-                    for (let x of e.response.data.errors) {
+                    for (const x of e.response.data.errors) {
                         alert("Error with product of ID : " + x.productId + " - " + x.message)
                     }
                 } else {
