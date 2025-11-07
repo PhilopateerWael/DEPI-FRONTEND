@@ -18,6 +18,8 @@ import { Cart } from './pages/Cart';
 import ProtectedRoute from './components/ProtectedRoute';
 import { setProducts } from './store/slices/productsSlice';
 import ProductPage from './pages/Product';
+import Profile from './pages/Profile';
+import { setOrders, type TOrder } from './store/slices/ordersSlice';
 
 const MainLayout = () => {
     return (
@@ -50,7 +52,7 @@ function App() {
             try {
                 const res = await api.get<{ user: TUser }>("/auth/me")
                 dispatch(auth(res.data.user))
-            } catch{
+            } catch {
                 dispatch(notAuth())
                 localStorage.setItem("wishlist", JSON.stringify([]))
                 localStorage.setItem("cart", JSON.stringify([]))
@@ -60,15 +62,25 @@ function App() {
         async function tryFetchProducts() {
             try {
                 const res = await api.get<TProduct[]>("/products/all");
-                console.log(res);
                 dispatch(setProducts(res.data));
-            } catch{
+            } catch {
                 setError(true)
+            }
+        }
+
+        async function tryFetchOrders() {
+            try{
+                const res = await api.get<TOrder[]>("/products/orders");
+                dispatch(setOrders(res.data));
+                console.log(res)
+            }catch{
+                alert("Error fetching orders")
             }
         }
 
         tryFetchProducts()
         tryFetchSelf()
+        tryFetchOrders()
     }, [dispatch])
 
 
@@ -88,6 +100,7 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>}></Route>
                         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>}></Route>
+                        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}></Route>
                         <Route path="/product/:id" element={<ProductPage />} />
                     </Route>
                     <Route path="/login" element={<Login />}></Route>
