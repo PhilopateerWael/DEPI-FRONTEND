@@ -10,7 +10,7 @@ const AddProductCard = () => {
         const formData = new FormData(e.currentTarget);
 
         try {
-            const res = await api.post("/products/add", formData, {
+            await api.post("/products/add", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             setOpen(false);

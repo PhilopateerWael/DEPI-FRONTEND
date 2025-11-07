@@ -9,7 +9,7 @@ const productsSlice = createSlice({
     name: "products",
     initialState,
     reducers: {
-        setProducts(state, action: PayloadAction<TProduct[]>) {
+        setProducts(_state, action: PayloadAction<TProduct[]>) {
             return action.payload;
         }
     },
