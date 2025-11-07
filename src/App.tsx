@@ -60,6 +60,7 @@ function App() {
         async function tryFetchProducts() {
             try {
                 const res = await api.get<TProduct[]>("/products/all");
+                console.log(res);
                 dispatch(setProducts(res.data));
             } catch (err: any) {
                 setError(true)
@@ -70,7 +71,6 @@ function App() {
         tryFetchSelf()
     }, [])
 
-    console.log(authSlice)
 
     if (authSlice.loading) {
         return <div>Loading...</div>

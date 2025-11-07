@@ -30,7 +30,6 @@ const ProductPage = () => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        console.log([...formData.entries()]);
         try {
             await api.put("/products/edit", formData, {
                 headers: { "Content-Type": "multipart/form-data" },

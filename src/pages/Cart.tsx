@@ -37,7 +37,6 @@ export const Cart = () => {
             .then(x => {
                 location.href = x.data.url
             }).catch(e => {
-                console.log(e)
                 if (e?.response?.data?.ok) {
                     dispatch(setCart(e.response.data.ok))
                     for (let x of e.response.data.errors) {

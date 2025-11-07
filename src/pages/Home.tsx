@@ -7,7 +7,6 @@ import AddProductCard from "../components/admin/AddProductCard";
 const Home = () => {
     const authSlice = useSelector((state: RootState) => state.auth);
     const products = useSelector((state: RootState) => state.products);
-    console.log(products)
     const ITEMS_PER_PAGE = 8;
     const [page, setPage] = useState(1);
     const start = (page - 1) * ITEMS_PER_PAGE;

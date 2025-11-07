@@ -7,7 +7,6 @@ const GoogleLoginButton = () => {
         api.post("/auth/google", { code: codeResponse.credential })
             .then(res => {
                 const userData: { data: TUser } = res.data;
-                console.log(userData);
             })
             .catch(e => {
                 const msg =
