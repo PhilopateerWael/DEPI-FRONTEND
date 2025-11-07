@@ -34,16 +34,16 @@ function App() {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        if (!Array.isArray(JSON.parse(localStorage.getItem("cart") || " "))) {
+        if (!Array.isArray(JSON.parse(localStorage.getItem("cart") || "[]"))) {
             localStorage.setItem("cart", JSON.stringify([]))
         } else {
-            dispatch(setCart({ cart: JSON.parse(localStorage.getItem("cart") as string) }))
+            dispatch(setCart({ cart: JSON.parse(localStorage.getItem("cart") as string || "[]") }))
         }
 
-        if (!Array.isArray(JSON.parse(localStorage.getItem("wishlist") || " "))) {
+        if (!Array.isArray(JSON.parse(localStorage.getItem("wishlist") || "[]"))) {
             localStorage.setItem("wishlist", JSON.stringify([]))
         } else {
-            dispatch(setFavorites(JSON.parse(localStorage.getItem("wishlist") as string)))
+            dispatch(setFavorites(JSON.parse(localStorage.getItem("wishlist") as string || "[]")))
         }
 
         async function tryFetchSelf() {
