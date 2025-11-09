@@ -72,9 +72,8 @@ function App() {
             try{
                 const res = await api.get<TOrder[]>("/products/orders");
                 dispatch(setOrders(res.data));
-                console.log(res)
             }catch{
-                alert("Error fetching orders")
+                console.log("no orders")
             }
         }
 
