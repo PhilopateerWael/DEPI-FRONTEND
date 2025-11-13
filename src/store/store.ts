@@ -4,6 +4,7 @@ import authSlice from "./slices/authSlice"
 import productsSlice from "./slices/productsSlice";
 import favoritesSlice from "./slices/favoritesSlice";
 import ordersSlice from "./slices/ordersSlice";
+import searchSlice from "./slices/searchSlice"
 
 const Store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ const Store = configureStore({
         auth: authSlice,
         products: productsSlice,
         favorites: favoritesSlice,
-        orders: ordersSlice
+        orders: ordersSlice,
+        search : searchSlice
     }
 })
 

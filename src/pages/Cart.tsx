@@ -8,45 +8,42 @@ export const Cart = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state: RootState) => state.cart);
     const products = useSelector((state: RootState) => state.products);
-    const cleanCart = cart.filter(item => products.find(p => p._id === item.productId && item.quantity <= p.stock));
+
+    const cleanCart = cart.filter(item =>
+        products.find(p => p._id === item.productId && item.quantity <= p.stock)
+    );
 
     if (cleanCart.length !== cart.length) {
-        dispatch(setCart({ cart: cleanCart }))
+        dispatch(setCart({ cart: cleanCart }));
     }
-    const items = cleanCart.map(item => { return { quantity: item.quantity, product: products.find(p => p._id === item.productId)! } });
 
-    const increase = (id: string) => {
-        dispatch(incQuantity({ productId: id }))
-    };
+    const items = cleanCart.map(item => ({
+        quantity: item.quantity,
+        product: products.find(p => p._id === item.productId)!
+    }));
 
-    const decrease = (id: string) => {
-        dispatch(decQuantity({ productId: id }))
-    };
+    const increase = (id: string) => dispatch(incQuantity({ productId: id }));
+    const decrease = (id: string) => dispatch(decQuantity({ productId: id }));
+    const removeItem = (id: string) => dispatch(removeProduct({ productId: id }));
 
-    const removeItem = (id: string) => {
-        dispatch(removeProduct({ productId: id }))
-    };
-
-    const total = items.reduce(
-        (acc, i) => acc + i.product.price * i.quantity,
-        0
-    );
+    const total = items.reduce((acc, i) => acc + i.product.price * i.quantity, 0);
 
     const handleCheckout = () => {
         api.post("/products/checkout", { cart: cleanCart })
             .then(x => {
-                location.href = x.data.url
-            }).catch(e => {
+                location.href = x.data.url;
+            })
+            .catch(e => {
                 if (e?.response?.data?.ok) {
-                    dispatch(setCart(e.response.data.ok))
+                    dispatch(setCart(e.response.data.ok));
                     for (const x of e.response.data.errors) {
-                        alert("Error with product of ID : " + x.productId + " - " + x.message)
+                        alert("Error with product of ID : " + x.productId + " - " + x.message);
                     }
                 } else {
-                    alert("server error")
+                    alert("server error");
                 }
-            })
-    }
+            });
+    };
 
     return (
         <div className="max-w-7xl max-sm:px-2 mx-auto px-6 py-6 flex flex-col h-full">
@@ -78,7 +75,10 @@ export const Cart = () => {
                         <span>${total.toFixed(2)}</span>
                     </div>
 
-                    <button className="cursor-pointer w-full bg-black text-white py-3 text-lg font-medium rounded-xl hover:bg-gray-800" onClick={handleCheckout}>
+                    <button
+                        className="cursor-pointer w-full bg-black text-white py-3 text-lg font-medium rounded-xl hover:bg-gray-800"
+                        onClick={handleCheckout}
+                    >
                         Checkout
                     </button>
                 </div>
