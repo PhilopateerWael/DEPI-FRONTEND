@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import GoogleLoginButton from "../../components/GoogleLoginButton";
 import api from "../../Api";
 import type { RootState } from "../../store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { TUser } from "../../Types";
-import { auth } from "../../store/slices/authSlice";
 import type { AxiosError } from "axios";
 
 function isAxiosError(error: unknown): error is AxiosError<{ message?: string }> {
@@ -14,15 +13,11 @@ function isAxiosError(error: unknown): error is AxiosError<{ message?: string }>
 
 const Register = () => {
     const authSlice = useSelector((state: RootState) => state.auth)
-
-    const navigate = useNavigate();
-
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
     const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
 
     if (authSlice.user) return <Navigate to="/" />
 
@@ -37,16 +32,13 @@ const Register = () => {
         setLoading(true);
 
         try {
-            const res = await api.post<{ user: TUser }>("/auth/register", {
+            await api.post<{ user: TUser }>("/auth/register", {
                 username,
                 email,
                 password,
             });
 
-            const user = res.data.user;
-
-            dispatch(auth(user))
-            navigate("/");
+            location.reload()
         } catch (err: unknown) {
             let msg = "Something went wrong";
 
@@ -133,7 +125,7 @@ const Register = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg disabled:opacity-50"
+                        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                     >
                         {loading ? "Registering..." : "Register"}
                     </button>

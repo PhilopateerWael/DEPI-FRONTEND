@@ -79,7 +79,7 @@ function App() {
                 const res = await api.get<TOrder[]>("/products/orders");
                 dispatch(setOrders(res.data));
             } catch {
-                console.log("No orders found.");
+                console.log("Not Authorized");
             }
         };
 

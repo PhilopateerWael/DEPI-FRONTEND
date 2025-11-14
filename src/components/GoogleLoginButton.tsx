@@ -1,18 +1,11 @@
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import api from "../Api";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../store/slices/authSlice";
 
 const GoogleLoginButton = () => {
-    const dispatch = useDispatch()
-    const navigate = useNavigate();
     function onSuccess(codeResponse: CredentialResponse) {
         api.post("/auth/google", { code: codeResponse.credential })
-            .then(res => {
-                const user = res.data.user;
-                dispatch(auth(user))
-                navigate("/");
+            .then(_res => {
+                location.reload();
             })
             .catch(e => {
                 const msg =
@@ -27,7 +20,7 @@ const GoogleLoginButton = () => {
     }
 
     return (
-        <div className="google-wrapper w-full justify-center flex">
+        <div className="w-full justify-center flex cursor-pointer">
             <GoogleLogin
                 onSuccess={onSuccess}
                 onError={onError}

@@ -74,7 +74,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         type="text"
                         defaultValue={product?.name}
                         placeholder="Product Name"
-                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none transition"
+                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
                         required
                     />
 
@@ -82,7 +82,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         name="description"
                         defaultValue={product?.description}
                         placeholder="Description"
-                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none transition"
+                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
                         rows={3}
                         required
                     />
@@ -92,7 +92,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         type="number"
                         defaultValue={product?.price}
                         placeholder="Price"
-                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none transition"
+                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
                         required
                     />
 
@@ -101,7 +101,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         type="number"
                         defaultValue={product?.stock}
                         placeholder="Stock"
-                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none transition"
+                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
                         required
                     />
 
@@ -121,7 +121,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         />
                     )}
 
-                    <div className="flex justify-between items-center mt-6">
+                    <div className="flex justify-between items-center mt-6 cursor-pointer">
                         {mode === "edit" && product && (
                             <button
                                 type="button"
@@ -135,7 +135,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                                         console.error(err);
                                     }
                                 }}
-                                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer"
                             >
                                 Delete
                             </button>
@@ -145,7 +145,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="px-5 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+                                className="px-5 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 cursor-pointer"
                                 disabled={loading}
                             >
                                 Cancel
@@ -155,7 +155,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                                 type="submit"
                                 className={`px-5 py-2 rounded-lg text-white ${loading
                                     ? "bg-red-300 cursor-not-allowed"
-                                    : "bg-red-500 hover:bg-red-600"} transition flex items-center justify-center`}
+                                    : "bg-red-500 hover:bg-red-600"} cursor-pointer flex items-center justify-center`}
                                 disabled={loading}
                             >
                                 {loading ? (mode === "edit" ? "Saving..." : "Adding...") : mode === "edit" ? "Save" : "Add"}
