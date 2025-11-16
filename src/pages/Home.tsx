@@ -30,14 +30,16 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6 py-6">
             <h2 className="text-2xl font-semibold mb-6">Featured Products</h2>
 
+            {showAdminCard && <AddProductCard />}
             {filteredProducts.length === 0 ? (
-                <p className="text-center text-gray-500 text-lg">
-                    {searchTerm ? `No products found for "${searchTerm}".` : "No products yet."}
-                </p>
+                <>
+                    <p className="text-center text-gray-500 text-lg mt-4">
+                        {searchTerm ? `No products found for "${searchTerm}".` : "No products yet."}
+                    </p>
+                </>
             ) : (
                 <>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {showAdminCard && <AddProductCard />}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
                         {visibleProducts.map(product => (
                             <ProductCard key={product._id || product.name} product={product} />
                         ))}

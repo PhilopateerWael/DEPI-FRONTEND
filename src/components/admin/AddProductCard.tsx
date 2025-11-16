@@ -8,7 +8,7 @@ const AddProductCard = () => {
         <>
             <button
                 onClick={() => setOpen(true)}
-                className="border border-red-500 cursor-pointer text-red-500 rounded-xl shadow cursor-pointer flex justify-center items-center p-6 bg-white font-semibold text-lg w-full max-w-xs mx-auto"
+                className="border border-red-500 text-red-500 rounded-xl shadow cursor-pointer flex justify-center items-center p-6 bg-white font-semibold text-lg w-full mx-auto"
             >
                 + Add Product
             </button>
