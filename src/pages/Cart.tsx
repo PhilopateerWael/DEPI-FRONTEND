@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CartProduct } from "../components/CartProduct";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
@@ -8,6 +9,8 @@ export const Cart = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state: RootState) => state.cart);
     const products = useSelector((state: RootState) => state.products);
+
+    const [loading, setLoading] = useState(false);
 
     const cleanCart = cart.filter(item =>
         products.find(p => p._id === item.productId && item.quantity <= p.stock)
@@ -29,11 +32,16 @@ export const Cart = () => {
     const total = items.reduce((acc, i) => acc + i.product.price * i.quantity, 0);
 
     const handleCheckout = () => {
+        if (loading) return;
+        setLoading(true);
+
         api.post("/products/checkout", { cart: cleanCart })
             .then(x => {
+                localStorage.setItem("cart", JSON.stringify([]));
                 location.href = x.data.url;
             })
             .catch(e => {
+                setLoading(false);
                 if (e?.response?.data?.ok) {
                     dispatch(setCart(e.response.data.ok));
                     for (const x of e.response.data.errors) {
@@ -76,10 +84,12 @@ export const Cart = () => {
                     </div>
 
                     <button
-                        className="cursor-pointer w-full bg-black text-white py-3 text-lg font-medium rounded-xl hover:bg-gray-800"
+                        className={`cursor-pointer w-full bg-black text-white py-3 text-lg font-medium rounded-xl
+                            ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-gray-800"}`}
                         onClick={handleCheckout}
+                        disabled={loading}
                     >
-                        Checkout
+                        {loading ? "Processing..." : "Checkout"}
                     </button>
                 </div>
             )}
