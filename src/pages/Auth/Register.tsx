@@ -68,15 +68,16 @@ const Register = () => {
                 <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-1">
                         <label className="text-sm font-medium text-gray-700">
-                            Full Name
+                            Username
                         </label>
                         <input
                             type="text"
-                            placeholder="John Doe"
+                            placeholder="username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-red-500 "
                             required
+                            minLength={3}
                         />
                     </div>
 
@@ -86,7 +87,7 @@ const Register = () => {
                         </label>
                         <input
                             type="email"
-                            placeholder="johndoe@example.com"
+                            placeholder="email@gmail.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-red-500 "
@@ -105,6 +106,7 @@ const Register = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-red-500 "
                             required
+                            minLength={6}
                         />
                     </div>
 

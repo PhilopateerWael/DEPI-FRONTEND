@@ -12,6 +12,12 @@ const OrderModal = ({
                     Order Info
                 </h2>
 
+                {order.message && (
+                    <div className="mb-4 p-3 bg-gray-100 rounded-lg text-gray-700 text-sm whitespace-pre-wrap wrap-break-word">
+                        {order.message}
+                    </div>
+                )}
+
                 <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto">
                     {order.products.map((p: any) => (
                         <div

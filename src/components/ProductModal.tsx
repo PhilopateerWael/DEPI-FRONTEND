@@ -94,6 +94,8 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         placeholder="Price"
                         className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
                         required
+                        min={1}
+                        max={10000}
                     />
 
                     <input
@@ -103,6 +105,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         placeholder="Stock"
                         className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
                         required
+                        min={0}
                     />
 
                     <input

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CartProduct } from "../components/CartProduct";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
-import { decQuantity, incQuantity, removeProduct, setCart } from "../store/slices/cartSlice";
+import { clearCart, decQuantity, incQuantity, removeProduct, setCart } from "../store/slices/cartSlice";
 import api from "../Api";
 
 export const Cart = () => {
@@ -37,7 +37,7 @@ export const Cart = () => {
 
         api.post("/products/checkout", { cart: cleanCart })
             .then(x => {
-                localStorage.setItem("cart", JSON.stringify([]));
+                dispatch(clearCart());
                 location.href = x.data.url;
             })
             .catch(e => {
