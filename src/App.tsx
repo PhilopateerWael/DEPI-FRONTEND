@@ -37,6 +37,7 @@ function App() {
     const dispatch = useDispatch<AppDispatch>();
     const { loading } = useSelector((state: RootState) => state.auth);
     const [error, setError] = useState(false);
+    const [loadingProducts, setLoadingPorducts] = useState(true)
 
     useEffect(() => {
         const safeParse = (key: string) => {
@@ -71,6 +72,8 @@ function App() {
                 dispatch(setProducts(res.data));
             } catch {
                 setError(true);
+            } finally {
+                setLoadingPorducts(false)
             }
         };
 
@@ -88,7 +91,7 @@ function App() {
         tryFetchOrders();
     }, [dispatch]);
 
-    if (loading) {
+    if (loading || loadingProducts) {
         return (
             <div className="h-screen flex items-center justify-center text-lg font-medium text-gray-600">
                 Loading...
