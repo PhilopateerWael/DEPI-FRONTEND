@@ -18,7 +18,7 @@ export const Cart = () => {
     const cleanCart = cart.filter(item =>
         products.find(p => p._id === item.productId && item.quantity <= p.stock)
     );
-
+    console.log({ cleanCart, cart, products });
     if (cleanCart.length !== cart.length) {
         dispatch(setCart({ cart: cleanCart }));
     }
