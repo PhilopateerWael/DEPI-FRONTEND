@@ -42,7 +42,6 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
             }
             onSuccess?.();
             onClose();
-            location.reload();
         } catch {
             alert(`Failed to ${mode === "edit" ? "update" : "add"} product`);
         } finally {
@@ -62,9 +61,9 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
     if (!open) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-            <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-lg relative animate-fade-in max-h-2/3 overflow-y-scroll">
-                <h2 className="text-2xl font-bold mb-6 text-gray-900">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4 animate-fade-in">
+            <div className="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl relative max-h-[90vh] overflow-y-auto">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900">
                     {mode === "edit" ? "Edit Product" : "Add New Product"}
                 </h2>
 
@@ -74,7 +73,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         type="text"
                         defaultValue={product?.name}
                         placeholder="Product Name"
-                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
+                        className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-red-400 outline-none text-gray-800"
                         required
                     />
 
@@ -82,7 +81,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         name="description"
                         defaultValue={product?.description}
                         placeholder="Description"
-                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
+                        className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-red-400 outline-none text-gray-800"
                         rows={3}
                         required
                     />
@@ -91,8 +90,8 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         name="price"
                         type="number"
                         defaultValue={product?.price}
-                        placeholder="Price"
-                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
+                        placeholder="Price ($)"
+                        className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-red-400 outline-none text-gray-800"
                         required
                         min={1}
                         max={10000}
@@ -103,7 +102,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         type="number"
                         defaultValue={product?.stock}
                         placeholder="Stock"
-                        className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-400 outline-none "
+                        className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-red-400 outline-none text-gray-800"
                         required
                         min={0}
                     />
@@ -112,7 +111,7 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         name="img"
                         type="file"
                         accept="image/*"
-                        className="border border-gray-300 rounded-lg px-4 py-2 file:border-0 file:bg-red-500 file:text-white file:px-3 file:py-1 file:rounded-md file:cursor-pointer"
+                        className="border border-gray-300 rounded-xl px-4 py-3 file:border-0 file:bg-red-600 file:text-white file:px-3 file:py-1 file:rounded-lg file:cursor-pointer"
                         onChange={handleFileChange}
                     />
 
@@ -120,11 +119,11 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                         <img
                             src={preview}
                             alt="Preview"
-                            className="w-full h-48 object-contain rounded-lg border mt-2"
+                            className="w-full h-48 object-contain rounded-xl border mt-2"
                         />
                     )}
 
-                    <div className="flex justify-between items-center mt-6 cursor-pointer">
+                    <div className="flex justify-between items-center mt-6">
                         {mode === "edit" && product && (
                             <button
                                 type="button"
@@ -132,23 +131,23 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
                                     if (!confirm("Delete product?")) return;
                                     try {
                                         await api.delete(`/products/delete`, { data: { productId: product._id } });
-                                        alert("Deleted");
-                                        window.location.href = "/";
+                                        alert("Deleted successfully");
+                                        window.location.reload();
                                     } catch (err) {
                                         console.error(err);
                                     }
                                 }}
-                                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer"
+                                className="cursor-pointer px-5 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
                             >
                                 Delete
                             </button>
                         )}
 
-                        <div className="flex gap-2 ml-auto">
+                        <div className="flex gap-3 ml-auto">
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="px-5 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 cursor-pointer"
+                                className="px-5 py-3 bg-gray-200 rounded-xl hover:bg-gray-300 transition cursor-pointer"
                                 disabled={loading}
                             >
                                 Cancel
@@ -156,12 +155,18 @@ const ProductModal = ({ open, onClose, mode, product, onSuccess }: ProductModalP
 
                             <button
                                 type="submit"
-                                className={`px-5 py-2 rounded-lg text-white ${loading
+                                className={`px-5 py-3 rounded-xl text-white ${loading
                                     ? "bg-red-300 cursor-not-allowed"
-                                    : "bg-red-500 hover:bg-red-600"} cursor-pointer flex items-center justify-center`}
+                                    : "bg-red-600 hover:bg-red-700"} transition flex items-center justify-center cursor-pointer`}
                                 disabled={loading}
                             >
-                                {loading ? (mode === "edit" ? "Saving..." : "Adding...") : mode === "edit" ? "Save" : "Add"}
+                                {loading
+                                    ? mode === "edit"
+                                        ? "Saving..."
+                                        : "Adding..."
+                                    : mode === "edit"
+                                        ? "Save"
+                                        : "Add"}
                             </button>
                         </div>
                     </div>

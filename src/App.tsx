@@ -11,6 +11,7 @@ import Wishlist from "./pages/Wishlist";
 import { Cart } from "./pages/Cart";
 import ProductPage from "./pages/Product";
 import Profile from "./pages/Profile";
+import LandingPage from "./pages/Landing";
 
 import env from "./env";
 import api from "./Api";
@@ -112,7 +113,8 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route element={<MainLayout />}>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<LandingPage />} />
+                        <Route path="/products" element={<Home />} />
                         <Route
                             path="/wishlist"
                             element={

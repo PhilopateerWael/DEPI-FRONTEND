@@ -8,18 +8,19 @@ const OrdersTab = ({
     onView: (id: string) => void;
 }) => {
     return (
-        <div className="bg-white shadow-md rounded-xl p-6 max-sm:p-3">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900">My Orders</h2>
+        <div className="bg-white rounded-2xl">
 
             {!orders.length ? (
-                <p className="text-gray-500">You haven’t placed any orders yet.</p>
+                <p className="text-gray-500 text-center py-6">
+                    You haven’t placed any orders yet.
+                </p>
             ) : (
                 <div className="flex flex-col-reverse gap-4">
                     {orders.map((order, index) => (
                         <OrderCard
                             key={order._id}
                             order={order}
-                            index={index}
+                            index={orders.length - index} // Show 1-based numbering
                             onView={onView}
                         />
                     ))}

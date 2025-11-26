@@ -18,7 +18,7 @@ export const Cart = () => {
     const cleanCart = cart.filter(item =>
         products.find(p => p._id === item.productId && item.quantity <= p.stock)
     );
-    console.log({ cleanCart, cart, products });
+
     if (cleanCart.length !== cart.length) {
         dispatch(setCart({ cart: cleanCart }));
     }
@@ -34,7 +34,6 @@ export const Cart = () => {
 
     const total = items.reduce((acc, i) => acc + i.product.price * i.quantity, 0);
 
-    // 1 point = 0.1$
     const discount = points * 0.1;
 
     const maxPoints = Math.min(auth.user?.loyaltyPoints || 0, total * 10);
@@ -69,8 +68,8 @@ export const Cart = () => {
     };
 
     return (
-        <div className="max-w-7xl max-sm:px-2 mx-auto px-6 py-6 flex flex-col h-full">
-            <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
+        <div className="max-w-7xl mx-auto px-6 max-sm:px-2 py-8">
+            <h1 className="text-3xl font-bold mb-6 text-gray-900">Your Cart</h1>
 
             <div className="flex flex-col gap-4 flex-1">
                 {items.map(({ product, quantity }) => (
@@ -92,9 +91,8 @@ export const Cart = () => {
             )}
 
             {items.length > 0 && (
-                <div className="mt-8 border-t pt-6 bg-gray-50 rounded-xl p-6 shadow-sm">
+                <div className="mt-8 border-black border pt-6 bg-gray-50 rounded-xl p-6">
 
-                    {/* Loyalty Points Input */}
                     <div className="mb-6">
                         <label className="block mb-2 font-semibold text-lg">
                             🎁 Use Loyalty Points
@@ -124,7 +122,6 @@ export const Cart = () => {
                         )}
                     </div>
 
-                    {/* Pricing Section */}
                     <div className="space-y-2 mb-6">
                         <div className="flex justify-between text-lg">
                             <span>Subtotal</span>
@@ -145,8 +142,8 @@ export const Cart = () => {
                     </div>
 
                     <button
-                        className={`cursor-pointer w-full bg-black text-white py-4 text-xl font-semibold rounded-xl transition
-                            ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-gray-800"}`}
+                        className={`cursor-pointer w-full bg-red-500 text-white py-4 text-xl font-semibold rounded-xl transition
+                            ${loading ? "opacity-60 cursor-not-allowed" : " "}`}
                         onClick={handleCheckout}
                         disabled={loading}
                     >
