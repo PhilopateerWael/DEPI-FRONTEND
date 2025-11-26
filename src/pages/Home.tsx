@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { ProductCard } from "../components/ProductCard";
 import AddProductCard from "../components/admin/AddProductCard";
-import banner from "../assets/banner1.webp";
 
 const ITEMS_PER_PAGE = 8;
 
